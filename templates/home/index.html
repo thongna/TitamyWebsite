@@ -1,0 +1,241 @@
+{% extends "home/base.html" %}
+
+{% load static %}
+{% block placeholder %}
+    <!-- Hero Slider -->
+    <section class="section-wrap nopadding">
+        <div class="container">
+            <div class="entry-slider">
+                <div class="flexslider" id="flexslider-hero">
+                    <ul class="slides clearfix">
+                        {% for new in news %}
+                            <li>
+                                <img src="{% static '' %}{{ new.new_img }}" alt="">
+
+                                <div class="hero-holder {{ new.new_text_position }}">
+                                    <div class="hero-lines">
+                                        <h1 class="hero-heading white">{{ new.new_name }}</h1>
+                                        <h4 class="hero-subheading white uppercase">{{ new.new_content }}</h4>
+
+                                    </div>
+                                    <a href="#" class="btn btn-lg btn-white"><span>Shop Now</span></a>
+                                </div>
+                            </li>
+
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div> <!-- end slider -->
+        </div>
+    </section> <!-- end hero slider -->
+
+    <!-- New Arrivals -->
+    <section class="section-wrap new-arrivals pb-40">
+        <div class="container">
+
+            <div class="row heading-row">
+                <div class="col-md-12 text-center">
+                    <h2 class="heading uppercase">
+                        <small>New Arrivals</small>
+                    </h2>
+                </div>
+            </div>
+
+            <div class="row row-10">
+                {% for newArrival in newArrials %}
+                    <div class="col-md-3 col-xs-6">
+                        <div class="product-item">
+                            <div class="product-img">
+                                <a href="productDetail/{{ newArrival.product_id }}/">
+                                    <img src="{{ newArrival.product_detail_image.url }}" alt="">
+                                </a>
+                                {% if newArrival.product_detail_discount > 0 %}
+                                    <div class="product-label">
+                                        <span class="sale">sale</span>
+                                    </div>
+                                {% endif %}
+                                {% if newArrival.product_detail_quantity == 0 %}
+                                    <span class="sold-out valign">out of stock</span>
+                                {% endif %}
+                                <div class="product-actions">
+                                    <a href="#" class="product-add-to-compare" data-toggle="tooltip"
+                                       data-placement="bottom"
+                                       title="Add to compare">
+                                        <i class="fa fa-exchange"></i>
+                                    </a>
+                                    <a href="#" class="product-add-to-wishlist" data-toggle="tooltip"
+                                       data-placement="bottom" title="Add to wishlist">
+                                        <i class="fa fa-heart"></i>
+                                    </a>
+                                </div>
+                                <a href="productDetail/{{ newArrival.product_id }}/" class="product-quickview">Quick View</a>
+                            </div>
+                            <div class="product-details">
+                                <h3>
+                                    <a class="product-title"
+                                       href="productDetail/{{ newArrival.product_id }}/">{{ newArrival.product_detail_name }}</a>
+                                </h3>
+                                <span id="calculator" class="price">
+                                        {% if newArrival.product_detail_discount > 0 %}
+                                            <del>
+                                                <span id="originPrice">{{ newArrival.product_detail_price }} VND</span>
+                                            </del>
+                                            <ins>
+                                                <span class="ammount">{{ newArrival.product_detail_price }} VND</span>
+                                            </ins>
+                                        {% else %}
+                                            <ins>
+                                                <span class="ammount">{{ newArrival.product_detail_price }} VND</span>
+                                            </ins>
+                                        {% endif %}
+
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div> <!-- end row -->
+        </div>
+    </section> <!-- end new arrivals -->
+
+    <!-- Newsletter -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="newsletter-box">
+                    <h5 class="uppercase">Subscribe to Receive Our Updates</h5>
+                    <form>
+                        <input type="email" class="newsletter-input" placeholder="Your email">
+                        <input type="submit" class="newsletter-submit btn btn-md btn-dark" value="subscribe">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Best Sellers -->
+    <section class="section-wrap pb-0">
+        <div class="container">
+
+            <div class="row heading-row">
+                <div class="col-md-12 text-center">
+                    <h2 class="heading uppercase">
+                        <small>Best Sellers</small>
+                    </h2>
+                </div>
+            </div>
+
+            <div class="row row-10">
+                {% for bestSaller in bestSellers %}
+                    <div class="col-md-3 col-xs-6 animated-from-left">
+                        <div class="product-item">
+                            <div class="product-img">
+                                <a href="productDetail/{{ bestSaller.product_id }}/">
+                                    <img src="{{ bestSaller.product_detail_image.url }}" alt="">
+                                </a>
+                                {% if bestSaller.product_detail_discount > 0 %}
+                                    <div class="product-label">
+                                        <span class="sale">sale</span>
+                                    </div>
+                                {% endif %}
+                                {% if bestSaller.product_detail_quantity == 0 %}
+                                    <span class="sold-out valign">out of stock</span>
+                                {% endif %}
+                                <div class="product-actions">
+                                    <a href="#" class="product-add-to-compare" data-toggle="tooltip"
+                                       data-placement="bottom"
+                                       title="Add to compare">
+                                        <i class="fa fa-exchange"></i>
+                                    </a>
+                                    <a href="#" class="product-add-to-wishlist" data-toggle="tooltip"
+                                       data-placement="bottom" title="Add to wishlist">
+                                        <i class="fa fa-heart"></i>
+                                    </a>
+                                </div>
+                                <a href="productDetail/{{ bestSaller.product_id }}/" class="product-quickview">Quick View</a>
+                            </div>
+
+                            <div class="product-details">
+                                <h3>
+                                    <a class="product-title"
+                                       href="productDetail/{{ bestSaller.product_id }}/">{{ bestSaller.product_detail_name }}</a>
+                                </h3>
+                                <span id="calculator" class="price">
+                                    {% if bestSaller.product_detail_discount > 0 %}
+                                        <del>
+                                            <span id="originPrice">{{ bestSaller.product_detail_price }} VND</span>
+                                        </del>
+                                        <ins>
+                                            <span class="ammount">{{ bestSaller.product_detail_price }} VND</span>
+                                        </ins>
+                                    {% else %}
+                                        <ins>
+                                            <span class="ammount">{{ bestSaller.product_detail_price }} VND</span>
+                                        </ins>
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+
+            </div> <!-- end row -->
+        </div>
+    </section> <!-- end best sellers -->
+
+    <!-- Partners -->
+    <section class="section-wrap partners pt-0 pb-50">
+        <div class="container">
+            <div class="row">
+
+                <div id="owl-partners" class="owl-carousel owl-theme">
+
+                    <div class="item">
+                        <a href="#">
+                            <img src="{% static 'img/partners/partner_logo_dark_1.png' %}" alt="">
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#">
+                            <img src="{% static 'img/partners/partner_logo_dark_2.png' %}" alt="">
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#">
+                            <img src="{% static 'img/partners/partner_logo_dark_3.png' %}" alt="">
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#">
+                            <img src="{% static 'img/partners/partner_logo_dark_4.png' %}" alt="">
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#">
+                            <img src="{% static 'img/partners/partner_logo_dark_5.png' %}" alt="">
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#">
+                            <img src="{% static 'img/partners/partner_logo_dark_6.png' %}" alt="">
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#">
+                            <img src="{% static 'img/partners/partner_logo_dark_1.png' %}" alt="">
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="#">
+                            <img src="{% static 'img/partners/partner_logo_dark_2.png' %}" alt="">
+                        </a>
+                    </div>
+
+                </div> <!-- end carousel -->
+
+            </div>
+        </div>
+    </section> <!-- end partners -->
+{% endblock %}
