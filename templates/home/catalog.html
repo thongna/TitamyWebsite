@@ -1,10 +1,226 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "home/base.html" %}
+{% block title %}Titamy Shop | Catalog{% endblock %}
+{% block content %}
+
+    <!-- Catalogue -->
+    <section class="section-wrap pt-70 pb-40 catalogue">
+      <div class="container relative">
+        <div class="row">
+
+          <div class="col-md-9 catalogue-col right mb-50">
+
+            <!-- Banner -->
+            <div class="banner-wrap relative">
+              <img src="{{ categories.cate_imgage.url }}" alt="">
+              <div class="hero-holder text-center right-align">
+                <div class="hero-lines mb-0">
+                  <h1 class="hero-heading white">{{ categories.cate_name }}</h1>
+                  <h4 class="hero-subheading white uppercase">{{ categories.cate_description }}</h4>
+                </div>
+              </div>
+            </div>
+
+            <div class="shop-filter" >
+                {% if count_product <= 12 %}
+                    <p class="result-count">Showing: 1-{{ count_product }} results</p>
+                {% else %}
+                    <p class="result-count">Showing: 1-12 of {{ count_product }} results</p>
+                {% endif %}
+              <form class="ecommerce-ordering">
+                <select>
+                  <option value="default-sorting">Default Sorting</option>
+                  <option value="price-low-to-high">Price: high to low</option>
+                  <option value="price-high-to-low">Price: low to high</option>
+                  <option value="by-popularity">By Popularity</option>
+                  <option value="date">By Newness</option>
+                  <option value="rating">By Rating</option>
+                </select>
+              </form>
+            </div>
+
+            <div class="shop-catalogue grid-view left">
+
+              <div class="row row-10 items-grid">
+                {% for product_detail in product_details %}
+                    <div class="col-md-4 col-xs-6">
+                      <div class="product-item">
+                        <div class="product-img">
+                          <a href='{% url 'productDetail' product_detail.product_id %}'>
+                            <img src="{{ product_detail.product_detail_image.url }}" alt="">
+                          </a>
+                          {% if product_detail.product_detail_discount > 0 %}
+                                    <div class="product-label">
+                                        <span class="sale">sale</span>
+                                    </div>
+                                {% endif %}
+                                {% if product_detail.product_detail_quantity == 0 %}
+                                    <span class="sold-out valign">out of stock</span>
+                                {% endif %}
+                          <div class="product-actions">
+                            <a href="#" class="product-add-to-compare" data-toggle="tooltip" data-placement="bottom" title="Add to compare">
+                              <i class="fa fa-exchange"></i>
+                            </a>
+                            <a href="#" class="product-add-to-wishlist" data-toggle="tooltip" data-placement="bottom" title="Add to wishlist">
+                              <i class="fa fa-heart"></i>
+                            </a>
+                          </div>
+                          <a href='{% url 'productDetail' product_detail.product_id %}' class="product-quickview">Quick View</a>
+                        </div>
+                        <div class="product-details">
+                          <h3>
+                            <a class="product-title" href='{% url 'productDetail' product_detail.product_id %}'>{{ product_detail.product_detail_name }}</a>
+                          </h3>
+                          <span class="price">
+                            {% if product_detail.product_detail_discount > 0 %}
+                                <del>
+                                    <span id="originPrice">{{ product_detail.product_detail_price }} VND</span>
+                                </del>
+                                <ins>
+                                    <span class="ammount">{{ product_detail.product_detail_price }} VND</span>
+                                </ins>
+                            {% else %}
+                                <ins>
+                                    <span class="ammount">{{ product_detail.product_detail_price }} VND</span>
+                                </ins>
+                            {% endif %}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                {% endfor %}
+              </div> <!-- end row -->
+            </div> <!-- end grid mode -->
+
+            <div class="clear"></div>
+
+            <!-- Pagination -->
+            <div class="pagination-wrap">
+                {% if count_product <= 1 %}
+                    <p class="result-count">Showing: 1-{{ count_product }} results</p>
+                    <nav class="pagination right clear">
+                    <span class="page-numbers current">{{ product_details.number }}</span>
+                    </nav>
+                {% else %}
+                    <p class="result-count">Showing: 1-12 of {{ count_product }} results</p>
+                    <nav class="pagination right clear">
+                        {% if product_details.has_previous %}
+                            <a href="?page={{ product_details.previous_page_number }}"><i class="fa fa-angle-left"></i></a>
+                        {% endif %}
+                        <span class="page-numbers current">{{ product_details.number }}</span>
+                        {% if product_details.has_next %}
+                            <a href="?page={{ product_details.next_page_number }}" class="page-numbers ">{{ product_details.next_page_number }}</a>
+                            <a href="?page={{ product_details.paginator.num_pages }}"><i class="fa fa-angle-right"></i></a>
+                        {% endif %}
+                    </nav>
+
+                {% endif %}
+
+            </div>
+
+          </div> <!-- end col -->
+
+          <!-- Sidebar -->
+          <aside class="col-md-3 sidebar left-sidebar">
+
+            <!-- Categories -->
+            <div class="widget categories">
+              <h3 class="widget-title uppercase">Categories</h3>
+              <ul class="list-no-dividers">
+                  {% for cate_list in cate_lists %}
+                      <li class="active-cat">
+                        <a href='{% url 'catalog' cate_list.cate_id %}'>{{ cate_list.cate_name }}</a>
+                      </li>
+                  {% endfor %}
+              </ul>
+            </div>
+
+            <!-- Select size -->
+            <div class="widget categories">
+              <h3 class="widget-title uppercase">Select size</h3>
+              <ul class="list-no-dividers">
+                  {% for size_list in size_lists %}
+                      <li>
+                          <a href="#">{{ size_list.size_name }}</a>
+                      </li>
+                  {% endfor %}
+              </ul>
+            </div>
+
+            <!-- Select color -->
+            <div class="widget categories">
+              <h3 class="widget-title uppercase">Select color</h3>
+              <ul class="list-no-dividers">
+                  {% for color_list in color_lists %}
+                      <li>
+                          <a href="#">{{ color_list.color_name }}</a>
+                      </li>
+                  {% endfor %}
+              </ul>
+            </div>
+
+            <!-- Filter by Price -->
+            <div class="widget filter-by-price clearfix">
+              <h3 class="widget-title uppercase">Filter by Price</h3>
+
+              <div id="slider-range"></div>
+              <p>
+                <label for="amount">Price:</label>
+                <input type="text" id="amount" readonly style="border:0;">
+                <a href="#" class="btn btn-sm btn-dark">Filter</a>
+              </p>
+            </div>
+
+            <!-- Bestsellers -->
+            <div class="widget bestsellers">
+              <div class="products-widget">
+                <h3 class="widget-title uppercase">Bestsellers</h3>
+                <ul class="product-list-widget">
+                  <li class="clearfix">
+                    <a href="shop-single-product.html">
+                      <img src="img/shop/shop_item_9.jpg" alt="">
+                      <span class="product-title">Sleeveless dress</span>
+                    </a>
+                    <span class="price">
+                      <ins>
+                        <span class="ammount">$120.00</span>
+                      </ins>
+                    </span>
+                  </li>
+                  <li class="clearfix">
+                    <a href="shop-single-product.html">
+                      <img src="img/shop/shop_item_10.jpg" alt="">
+                      <span class="product-title">Violet Party Dress</span>
+                    </a>
+                    <span class="price">
+                      <ins>
+                        <span class="ammount">$179.00</span>
+                      </ins>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Tags -->
+            <div class="widget tags clearfix">
+              <h3 class="widget-title uppercase">Tags</h3>
+              <a href="#">Multi-purpose</a>
+              <a href="#">Creative</a>
+              <a href="#">Elegant</a>
+              <a href="#">Clean</a>
+              <a href="#">Modern</a>
+              <a href="#">Responsive</a>
+              <a href="#">E-commerce</a>
+              <a href="#">WordPress</a>
+              <a href="#">Woocommerce</a>
+              <a href="#">Store</a>
+              <a href="#">Business</a>
+            </div>
+
+          </aside> <!-- end sidebar -->
+
+        </div> <!-- end row -->
+      </div> <!-- end container -->
+    </section> <!-- end catalogue -->
+
+{% endblock %}

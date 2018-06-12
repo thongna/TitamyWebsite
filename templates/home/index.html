@@ -1,7 +1,7 @@
 {% extends "home/base.html" %}
-
+{% block title %}Titamy Shop | Home{% endblock %}
 {% load static %}
-{% block placeholder %}
+{% block content %}
     <!-- Hero Slider -->
     <section class="section-wrap nopadding">
         <div class="container">
@@ -46,7 +46,7 @@
                     <div class="col-md-3 col-xs-6">
                         <div class="product-item">
                             <div class="product-img">
-                                <a href="productDetail/{{ newArrival.product_id }}/">
+                                <a href='{% url 'productDetail' newArrival.product_id %}'>
                                     <img src="{{ newArrival.product_detail_image.url }}" alt="">
                                 </a>
                                 {% if newArrival.product_detail_discount > 0 %}
@@ -68,12 +68,12 @@
                                         <i class="fa fa-heart"></i>
                                     </a>
                                 </div>
-                                <a href="productDetail/{{ newArrival.product_id }}/" class="product-quickview">Quick View</a>
+                                <a href='{% url 'productDetail' newArrival.product_id %}' class="product-quickview">Quick View</a>
                             </div>
                             <div class="product-details">
                                 <h3>
                                     <a class="product-title"
-                                       href="productDetail/{{ newArrival.product_id }}/">{{ newArrival.product_detail_name }}</a>
+                                       href='{% url 'productDetail' newArrival.product_id %}'>{{ newArrival.product_detail_name }}</a>
                                 </h3>
                                 <span id="calculator" class="price">
                                         {% if newArrival.product_detail_discount > 0 %}
@@ -130,7 +130,7 @@
                     <div class="col-md-3 col-xs-6 animated-from-left">
                         <div class="product-item">
                             <div class="product-img">
-                                <a href="productDetail/{{ bestSaller.product_id }}/">
+                                <a href='{% url 'productDetail' bestSaller.product_id %}'>
                                     <img src="{{ bestSaller.product_detail_image.url }}" alt="">
                                 </a>
                                 {% if bestSaller.product_detail_discount > 0 %}
@@ -152,13 +152,13 @@
                                         <i class="fa fa-heart"></i>
                                     </a>
                                 </div>
-                                <a href="productDetail/{{ bestSaller.product_id }}/" class="product-quickview">Quick View</a>
+                                <a href='{% url 'productDetail' bestSaller.product_id %}' class="product-quickview">Quick View</a>
                             </div>
 
                             <div class="product-details">
                                 <h3>
                                     <a class="product-title"
-                                       href="productDetail/{{ bestSaller.product_id }}/">{{ bestSaller.product_detail_name }}</a>
+                                       href='{% url 'productDetail' bestSaller.product_id %}'>{{ bestSaller.product_detail_name }}</a>
                                 </h3>
                                 <span id="calculator" class="price">
                                     {% if bestSaller.product_detail_discount > 0 %}

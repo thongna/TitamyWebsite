@@ -2,7 +2,7 @@
 {% load static %}
 <html lang="en">
 <head>
-    <title>Titamy Shop | Home</title>
+     <title>{% block title %}{% endblock %}</title>
 
   <meta charset="utf-8">
   <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
@@ -255,7 +255,7 @@
                                           <ul class="menu-list">
                                           {% for parentChild in parents %}
                                             {% if parentChild.cate_parent_id == parent.cate_id %}
-                                                <li><a href="#">{{ parentChild.cate_name }}</a></li>
+                                                <li><a href='{% url 'catalog' parentChild.cate_id %}'>{{ parentChild.cate_name }}</a></li>
                                             {% endif %}
                                           {% endfor %}
                                           </ul>
@@ -322,7 +322,7 @@
       </nav> <!-- end navbar -->
     </header> <!-- end navigation -->
 
-    {% block placeholder %}
+    {% block content %}
 
     {% endblock %}
 

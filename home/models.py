@@ -90,7 +90,7 @@ class Tag(models.Model):
 class TagMap(models.Model):
     tag_map_id = models.AutoField(primary_key=1, auto_created=1, unique=1)
     tag_id = models.ForeignKey(Tag, on_delete=models.CASCADE)
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product_id = models.ForeignKey(ProductDetail, on_delete=models.CASCADE)
 
 # Update product_detail_quantity when create a new product
 def update_product_detail(sender, **kwargs):

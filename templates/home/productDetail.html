@@ -1,5 +1,7 @@
 {% extends "home/base.html" %}
-{% block placeholder %}
+{% block title %}Titamy Shop | Product Detail{% endblock %}
+{% block content %}
+    {{ block.super }}
     <!-- Single Product -->
     <section class="section-wrap single-product">
         <div class="container relative">
@@ -84,8 +86,8 @@
                     </ul>
 
                     <div class="product_meta">
-                        <span class="sku">SKU: <a href="#">111763</a></span>
-                        <span class="posted_in">Category: <a href="#">{{ proDetails.cate_id }}</a></span>
+                        <span class="sku">SKU: <a href="#">{{ proDetails.product_id }}</a></span>
+                        <span class="posted_in">Category: <a href='{% url 'catalog' proDetails.cate_id %}'>{{ proDetails.cate_id }}</a></span>
                         <span class="tagged_as">Tags:
                             {% for productTag in productTags %}
                                 <a href="#">{{ productTag.tag_id }}</a>,
@@ -216,7 +218,7 @@
                     {% for relatedProduct in relatedProducts %}
                         <div class="product-item">
                         <div class="product-img">
-                            <a href="#">
+                            <a href='{% url 'productDetail' relatedProduct.product_id %}'>
                                 <img src="{{ relatedProduct.product_detail_image.url }}" alt="">
                             </a>
                             {% if relatedProduct.product_detail_discount > 0 %}
@@ -237,11 +239,11 @@
                                     <i class="fa fa-heart"></i>
                                 </a>
                             </div>
-                            <a href="#" class="product-quickview">Quick View</a>
+                            <a href='{% url 'productDetail' relatedProduct.product_id %}' class="product-quickview">Quick View</a>
                         </div>
                         <div class="product-details">
                         <h3>
-                            <a class="product-title" href="shop-single-product.html">{{ relatedProduct.product_detail_name }}</a>
+                            <a class="product-title" href='{% url 'productDetail' relatedProduct.product_id %}'>{{ relatedProduct.product_detail_name }}</a>
                         </h3>
                         <span class="price">
                             {% if relatedProduct.product_detail_discount > 0 %}
