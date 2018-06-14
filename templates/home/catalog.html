@@ -27,10 +27,10 @@
                     <p class="result-count">Showing: 1-12 of {{ count_product }} results</p>
                 {% endif %}
               <form class="ecommerce-ordering">
-                <select>
+                <select id="order" onchange="myFunction()">
                   <option value="default-sorting">Default Sorting</option>
-                  <option value="price-low-to-high">Price: high to low</option>
-                  <option value="price-high-to-low">Price: low to high</option>
+                  <option value="price-low-to-high">Price: low to high</option>
+                  <option value="price-high-to-low">Price: high to low</option>
                   <option value="by-popularity">By Popularity</option>
                   <option value="date">By Newness</option>
                   <option value="rating">By Rating</option>
@@ -95,7 +95,7 @@
 
             <!-- Pagination -->
             <div class="pagination-wrap">
-                {% if count_product <= 1 %}
+                {% if count_product <= 3 %}
                     <p class="result-count">Showing: 1-{{ count_product }} results</p>
                     <nav class="pagination right clear">
                     <span class="page-numbers current">{{ product_details.number }}</span>
@@ -104,12 +104,12 @@
                     <p class="result-count">Showing: 1-12 of {{ count_product }} results</p>
                     <nav class="pagination right clear">
                         {% if product_details.has_previous %}
-                            <a href="?page={{ product_details.previous_page_number }}"><i class="fa fa-angle-left"></i></a>
+                            <a href="?page={{ product_details.previous_page_number }}&order_by={{ order_by }}"><i class="fa fa-angle-left"></i></a>
                         {% endif %}
                         <span class="page-numbers current">{{ product_details.number }}</span>
                         {% if product_details.has_next %}
-                            <a href="?page={{ product_details.next_page_number }}" class="page-numbers ">{{ product_details.next_page_number }}</a>
-                            <a href="?page={{ product_details.paginator.num_pages }}"><i class="fa fa-angle-right"></i></a>
+                            <a href="?page={{ product_details.next_page_number }}&order_by={{ order_by }}" class="page-numbers ">{{ product_details.next_page_number }}</a>
+                            <a href="?page={{ product_details.paginator.num_pages }}&order_by={{ order_by }}"><i class="fa fa-angle-right"></i></a>
                         {% endif %}
                     </nav>
 
@@ -222,5 +222,10 @@
         </div> <!-- end row -->
       </div> <!-- end container -->
     </section> <!-- end catalogue -->
-
+    <script>
+    function myFunction() {
+        var a  = document.getElementById("order").value;
+        window.location.href = "?order_by=" + a;
+    }
+    </script>
 {% endblock %}

@@ -48,6 +48,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'django.middleware.cache.UpdateCacheMiddleware',
+    #'django.middleware.common.CommonMiddleware',
+    #'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'PythonWeb.urls'
@@ -71,6 +74,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'PythonWeb.wsgi.application'
 
+#cache in filesystem
+#CACHES = {
+#    'default': {
+#        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+#        'LOCATION': 'F:\Django\PythonWeb\cache',
+#        'TIMEOUT': 60,
+#        'OPTIONS': {
+#            'MAX_ENTRIES': 1000
+#        }
+#    }
+#}
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases

@@ -38,9 +38,27 @@ def catalog(request, id):
     cateParent = Category.objects.all()
     category = Category.objects.get(cate_id=id)
     product_detail_list = ProductDetail.objects.filter(cate_id=id)
-    paginator = Paginator(product_detail_list, 1)
+
+    #sorting
+    order_by = request.GET.get('order_by')
+    if order_by == "price-low-to-high":
+        product_detail_list = product_detail_list.order_by('product_detail_price')
+    elif order_by == "price-high-to-low":
+        product_detail_list = product_detail_list.order_by('-product_detail_price')
+    elif order_by == "by-popularity":
+        product_detail_list = product_detail_list.order_by('-product_detail_saled')
+    elif order_by == "date":
+        product_detail_list = product_detail_list.order_by('-product_detail_date')
+    elif order_by == "rating":
+        product_detail_list = product_detail_list.order_by('-product_detail_favorited')
+    elif order_by == "default-sorting":
+        product_detail_list = product_detail_list
+
+    #pagination
+    paginator = Paginator(product_detail_list, 3)
     page = request.GET.get('page')
     product_detail = paginator.get_page(page)
+
     count_product = product_detail_list.count()
     cate_list = basic.getCategoryList(0)
     size_list = basic.getSizeList(-1)
@@ -53,6 +71,7 @@ def catalog(request, id):
         'cate_lists': cate_list,
         'size_lists': size_list,
         'color_lists': color_list,
+        'order_by': order_by,
     }
 
     return render(request, 'home/catalog.html', context)

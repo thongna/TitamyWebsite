@@ -15,7 +15,7 @@ class ProductImageInline(admin.TabularInline):
     model = ProductImage
 
 class ProductDetailAdmin(admin.ModelAdmin):
-    list_display = ['product_id', 'product_detail_name', 'cate_id', 'product_detail_price']
+    list_display = ['product_id', 'product_detail_name', 'cate_id', 'product_detail_price', 'product_detail_date']
     ordering = ['product_detail_date']
     list_filter = ['product_detail_date']
     inlines = [ProductImageInline]
